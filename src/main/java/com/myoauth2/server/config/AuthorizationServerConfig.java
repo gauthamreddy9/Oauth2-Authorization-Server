@@ -26,12 +26,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient("myretail-service-client")
-				.authorizedGrantTypes("password","authorization_code", "refresh_token")
-				.authorities("ADMIN", "USER")
-				.scopes("read", "write")
+				.authorizedGrantTypes("password","authorization_code", "refresh_token", "client_credentials")
+				.authorities("USER")
+				.scopes("read")
 				.resourceIds("oauth2-resource")
 				.accessTokenValiditySeconds(300)
-				.secret("client-secret");
+				.secret("client-secret")
+				.and()
+				.withClient("myretail-service-client1")
+				.authorizedGrantTypes("password","authorization_code", "refresh_token", "client_credentials")
+				.authorities("ADMIN")
+				.scopes("read", "write")
+				.resourceIds("oauth2-resource1")
+				.accessTokenValiditySeconds(300)
+				.secret("client-secret1");
 	}
 	
 	@Override
